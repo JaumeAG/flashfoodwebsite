@@ -74,7 +74,7 @@ flashfoodwebsite/
 
 1. **Clonar el repositorio**
    ```bash
-   git clone https://github.com/tu-usuario/flashfoodwebsite.git
+   git clone https://github.com/JaumeAG/flashfoodwebsite.git
    cd flashfoodwebsite
    ```
 
