@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 // import anime from 'animejs/lib/anime.es.js'
 import { 
@@ -180,61 +180,10 @@ import { Badge } from "@/components/ui/badge"
 export default function LandingPage() {
   const [isVisible, setIsVisible] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [currentMockupIndex, setCurrentMockupIndex] = useState(0)
-  const [touchStartX, setTouchStartX] = useState(0)
-  const [touchEndX, setTouchEndX] = useState(0)
   const [activeTab, setActiveTab] = useState('restaurant')
   const router = useRouter()
-  const mainTitleRef = useRef<SVGTextElement>(null)
-  const mainSubtitleRef = useRef<SVGTextElement>(null)
-
   useEffect(() => {
     setIsVisible(true)
-    
-    // Animación de dibujo para el título principal
-    setTimeout(() => {
-      if (mainTitleRef.current && mainSubtitleRef.current) {
-        // Animar el título principal letra por letra
-        const titleText = mainTitleRef.current
-        const subtitleText = mainSubtitleRef.current
-        
-        // Configurar el texto para la animación
-        titleText.style.opacity = '0'
-        subtitleText.style.opacity = '0'
-        
-        // Animar el título principal
-        setTimeout(() => {
-          titleText.style.transition = 'opacity 2s ease-in-out'
-          titleText.style.opacity = '1'
-        }, 500)
-        
-        // Animar el subtítulo principal
-        setTimeout(() => {
-          subtitleText.style.transition = 'opacity 1.5s ease-in-out'
-          subtitleText.style.opacity = '1'
-        }, 1000)
-        
-        // Animar las letras individualmente del título
-        const titleLetters = titleText.querySelectorAll('tspan')
-        const subtitleLetters = subtitleText.querySelectorAll('tspan')
-        
-        titleLetters.forEach((letter, index) => {
-          letter.style.opacity = '0'
-          letter.style.transition = 'opacity 0.2s ease-out'
-          setTimeout(() => {
-            letter.style.opacity = '1'
-          }, 700 + (index * 80))
-        })
-        
-        subtitleLetters.forEach((letter, index) => {
-          letter.style.opacity = '0'
-          letter.style.transition = 'opacity 0.15s ease-out'
-          setTimeout(() => {
-            letter.style.opacity = '1'
-          }, 1000 + (index * 40))
-        })
-      }
-    }, 200)
   }, [])
 
   const scrollToSection = (sectionId: string) => {
@@ -253,7 +202,7 @@ export default function LandingPage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isMobileMenuOpen])
 
-  // Funciones para el carrusel de mockups
+  // Mockups estáticos
   const mockups = [
     {
       src: "/mockups/mockup_carta_digital.png",
@@ -274,36 +223,6 @@ export default function LandingPage() {
       description: "Gestiona tu cuenta"
     }
   ]
-
-  const nextMockup = () => {
-    setCurrentMockupIndex((prev) => (prev + 1) % mockups.length)
-  }
-
-  const prevMockup = () => {
-    setCurrentMockupIndex((prev) => (prev - 1 + mockups.length) % mockups.length)
-  }
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEndX(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return
-    
-    const distance = touchStartX - touchEndX
-    const isLeftSwipe = distance > 50
-    const isRightSwipe = distance < -50
-
-    if (isLeftSwipe) {
-      nextMockup()
-    } else if (isRightSwipe) {
-      prevMockup()
-    }
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-[#F7F3F1] to-[#F7F3F1]">
@@ -327,25 +246,25 @@ export default function LandingPage() {
             <div className="hidden lg:flex items-center space-x-8">
               <button 
                 onClick={() => scrollToSection('features')} 
-                className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm"
+                className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm cursor-pointer"
               >
                 Características
               </button>
               <button 
                 onClick={() => scrollToSection('how-it-works')} 
-                className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm"
+                className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm cursor-pointer"
               >
                 Cómo funciona
               </button>
               <button 
                 onClick={() => scrollToSection('aura-assistant')} 
-                className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm"
+                className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm cursor-pointer"
               >
                 AURA
               </button>
               <button 
                 onClick={() => scrollToSection('contact')} 
-                className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm"
+                className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm cursor-pointer"
               >
                 Contacto
               </button>
@@ -423,297 +342,66 @@ export default function LandingPage() {
         </>
       )}
 
-      {/* Hero Section - Interactive */}
-      <section className="pt-16 pb-12 px-4 sm:px-6 lg:px-8 bg-white min-h-screen flex items-center">
-        
-        <div className="max-w-7xl mx-auto relative z-10">
+      {/* Hero Section - Qamarero Style */}
+      <section className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-slate-50 via-[#F7F3F1] to-white">
+        <div className="max-w-7xl mx-auto w-full relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Side - Text Content */}
-                <div className={`text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-                  {/* SVG Animado para el título principal */}
-                  <div className="mb-0 sm:mb-1">
-                        <svg 
-                          width="1200" 
-                          height="240" 
-                          viewBox="0 0 1200 240" 
-                          className="w-full max-w-full"
-                        >
-                      <defs>
-                        <linearGradient id="mainTitleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#ea580c" />
-                          <stop offset="50%" stopColor="#dc2626" />
-                          <stop offset="100%" stopColor="#ea580c" />
-                        </linearGradient>
-                      </defs>
-                          <text 
-                            ref={mainTitleRef}
-                            x="600" 
-                            y="120" 
-                            textAnchor="middle" 
-                            className="text-9xl sm:text-9xl md:text-9xl lg:text-9xl font-bold"
-                        style={{ 
-                          fontFamily: 'system-ui, -apple-system, sans-serif',
-                          fill: 'url(#mainTitleGradient)'
-                        }}
-                      >
-                            <tspan x="600" dy="-50">R</tspan>
-                        <tspan>e</tspan>
-                        <tspan>v</tspan>
-                        <tspan>o</tspan>
-                        <tspan>l</tspan>
-                        <tspan>u</tspan>
-                        <tspan>c</tspan>
-                        <tspan>i</tspan>
-                        <tspan>o</tspan>
-                        <tspan>n</tspan>
-                        <tspan>a</tspan>
-                        <tspan> </tspan>
-                        <tspan>t</tspan>
-                        <tspan>u</tspan>
-                            <tspan x="600" dy="100">r</tspan>
-                        <tspan>e</tspan>
-                        <tspan>s</tspan>
-                        <tspan>t</tspan>
-                        <tspan>a</tspan>
-                        <tspan>u</tspan>
-                        <tspan>r</tspan>
-                        <tspan>a</tspan>
-                        <tspan>n</tspan>
-                        <tspan>t</tspan>
-                        <tspan>e</tspan>
-                      </text>
-                    </svg>
-                  </div>
-                  
-                  {/* SVG Animado para el subtítulo */}
-                  <div className="mb-1 sm:mb-2">
-                        <svg 
-                          width="2000" 
-                          height="60" 
-                          viewBox="0 0 2000 160" 
-                          className="w-full max-w-full"
-                        >
-                      <defs>
-                        <linearGradient id="mainSubtitleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#374151" />
-                          <stop offset="100%" stopColor="#6b7280" />
-                        </linearGradient>
-                      </defs>
-                          <text 
-                            ref={mainSubtitleRef}
-                            x="1000" 
-                            y="85" 
-                            textAnchor="middle" 
-                            className="text-6xl sm:text-5xl md:text-5xl lg:text-6xl"
-                        style={{ 
-                          fontFamily: 'system-ui, -apple-system, sans-serif',
-                          fill: 'url(#mainSubtitleGradient)'
-                        }}
-                      >
-                            <tspan x="1000" dy="0">L</tspan>
-                        <tspan>a</tspan>
-                        <tspan> </tspan>
-                        <tspan>s</tspan>
-                        <tspan>o</tspan>
-                        <tspan>l</tspan>
-                        <tspan>u</tspan>
-                        <tspan>c</tspan>
-                        <tspan>i</tspan>
-                        <tspan>ó</tspan>
-                        <tspan>n</tspan>
-                        <tspan> </tspan>
-                        <tspan>c</tspan>
-                        <tspan>o</tspan>
-                        <tspan>m</tspan>
-                        <tspan>p</tspan>
-                        <tspan>l</tspan>
-                        <tspan>e</tspan>
-                        <tspan>t</tspan>
-                        <tspan>a</tspan>
-                        <tspan> </tspan>
-                        <tspan>p</tspan>
-                        <tspan>a</tspan>
-                        <tspan>r</tspan>
-                        <tspan>a</tspan>
-                        <tspan> </tspan>
-                        <tspan>m</tspan>
-                        <tspan>o</tspan>
-                        <tspan>d</tspan>
-                        <tspan>e</tspan>
-                        <tspan>r</tspan>
-                        <tspan>n</tspan>
-                        <tspan>i</tspan>
-                        <tspan>z</tspan>
-                        <tspan>a</tspan>
-                        <tspan>r</tspan>
-                        <tspan> </tspan>
-                        <tspan>t</tspan>
-                        <tspan>u</tspan>
-                        <tspan> </tspan>
-                        <tspan>n</tspan>
-                        <tspan>e</tspan>
-                        <tspan>g</tspan>
-                        <tspan>o</tspan>
-                        <tspan>c</tspan>
-                        <tspan>i</tspan>
-                        <tspan>o</tspan>
-                        <tspan> </tspan>
-                        <tspan>g</tspan>
-                        <tspan>a</tspan>
-                        <tspan>s</tspan>
-                        <tspan>t</tspan>
-                        <tspan>r</tspan>
-                        <tspan>o</tspan>
-                        <tspan>n</tspan>
-                        <tspan>ó</tspan>
-                        <tspan>m</tspan>
-                        <tspan>i</tspan>
-                        <tspan>c</tspan>
-                        <tspan>o</tspan>
-                        <tspan>.</tspan>
-                      </text>
-                    </svg>
-                  </div>
-                  
-                  <p className="text-2xl sm:text-3xl text-gray-700 mb-8 leading-relaxed">
-                    <span className="font-semibold text-[#E4512F]"> Menú digital, pedidos sin contacto, gestión inteligente y fidelización automática.</span>
-                  </p>
-              <div className="flex justify-center">
-                <Button 
-                  size="lg" 
-                  className="bg-gradient-to-r from-[#E4512F] to-[#D64A3A] hover:from-[#D64A3A] hover:to-[#E4512F] text-white px-10 py-5 text-xl sm:text-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                  onClick={() => scrollToSection('contact')}
-                >
-                  <Zap className="w-6 h-6 mr-3" />
-                  Solicitar Demo
-                  <ArrowRight className="w-6 h-6 ml-3" />
-                </Button>
+            {/* Left Section - Text Content */}
+            <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}>
+              {/* Badge */}
+              {/* <div className="mb-6 inline-flex items-center px-4 py-2 bg-gradient-to-r from-[#E4512F] to-[#D64A3A] rounded-full border-2 border-[#E4512F]/20 shadow-lg">
+                <Brain className="w-4 h-4 text-white mr-2" />
+                <span className="text-white font-bold text-sm">APP RESTAURANTES CON IA 2025</span>
+              </div> */}
+
+              {/* Main Headline */}
+              <h1 className="mb-6 text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
+                <span className="block text-gray-900">Digitaliza tu</span>
+                <span className="block text-gray-900">restaurante y</span>
+                <span className="block text-[#E4512F]">automatiza procesos</span>
+                <span className="block text-gray-900">con la IA de FlashFood</span>
+              </h1>
+
+              {/* Descriptive Paragraph */}
+              <p className="mb-8 text-lg sm:text-xl text-gray-600 leading-relaxed">
+                El software todo en uno para restaurantes con inteligencia artificial que te ahorra tiempo, reduce costes y cumple con la normativa.
+              </p>
+
+              {/* Feature List */}
+              <div className="space-y-4">
+                <div className="flex items-center text-gray-700">
+                  <CheckCircle2 className="w-6 h-6 text-[#E4512F] mr-3 flex-shrink-0" />
+                  <span className="text-lg font-medium">Soporte 365</span>
+                </div>
+                <div className="flex items-center text-gray-700">
+                  <CheckCircle2 className="w-6 h-6 text-[#E4512F] mr-3 flex-shrink-0" />
+                  <span className="text-lg font-medium">Todo en Uno</span>
+                </div>
+                <div className="flex items-center text-gray-700">
+                  <CheckCircle2 className="w-6 h-6 text-[#E4512F] mr-3 flex-shrink-0" />
+                  <span className="text-lg font-medium">Potenciado con IA</span>
+                </div>
               </div>
             </div>
 
-            {/* Right Side - iPhone Mockups */}
-            <div className="relative h-[800px] flex items-center justify-center">
-              {/* Desktop: Carrusel de mockups */}
-              <div className="hidden lg:flex w-full h-full flex-col items-center justify-center">
-                <div className="relative w-full max-w-4xl h-[600px] flex items-center justify-center">
-                  {/* Mockup actual */}
-                  <div className={`relative transition-all duration-1000 delay-700 ease-in-out transform ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>
-                    <img 
-                      src={mockups[currentMockupIndex].src}
-                      alt={mockups[currentMockupIndex].alt}
-                      className="w-90 h-[700px] object-contain drop-shadow-2xl"
-                    />
-                  </div>
-                  
-                  {/* Botones de navegación */}
-                  <button
-                    onClick={prevMockup}
-                    className={`absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 hover:text-[#E4512F] rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-1000 delay-800 z-10 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-5'}`}
-                  >
-                    <ChevronLeft className="w-6 h-6" />
-                  </button>
-                  
-                  <button
-                    onClick={nextMockup}
-                    className={`absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-700 hover:text-[#E4512F] rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-1000 delay-800 z-10 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-5'}`}
-                  >
-                    <ChevronRight className="w-6 h-6" />
-                  </button>
-                </div>
-                
-                {/* Información del mockup actual */}
-                <div className={`mt-6 text-center transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {mockups[currentMockupIndex].title}
-                  </h3>
-                  <p className="text-gray-600">
-                    {mockups[currentMockupIndex].description}
-                  </p>
-                </div>
-                
-                {/* Indicadores de posición */}
-                <div className={`flex space-x-2 mt-4 transition-all duration-1000 delay-1200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-                  {mockups.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentMockupIndex(index)}
-                      className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                        index === currentMockupIndex 
-                          ? 'bg-[#E4512F] scale-110' 
-                          : 'bg-gray-300 hover:bg-gray-400'
-                      }`}
-                    />
-                  ))}
-                </div>
+            {/* Right Section - Mockups */}
+            <div className={`hidden lg:flex items-center justify-center space-x-2 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
+              {/* Smartphone Mockup */}
+              <div className="relative transform -rotate-6 hover:rotate-0 transition-transform duration-300">
+                <img 
+                  src="/mockups/mockup_carta_digital.png" 
+                  alt="Carta digital FlashFood"
+                  className="w-96 h-auto drop-shadow-2xl"
+                />
               </div>
 
-              {/* Mobile: Carrusel de mockups */}
-              <div className="lg:hidden w-full h-full flex flex-col items-center justify-center">
-                <div 
-                  className="relative w-full max-w-sm h-[600px] flex items-center justify-center"
-                  onTouchStart={handleTouchStart}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={handleTouchEnd}
-                >
-                  {/* Mockup actual */}
-                  <div className={`relative transition-all duration-1000 delay-700 ease-in-out transform ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>
-                    <img 
-                      src={mockups[currentMockupIndex].src}
-                      alt={mockups[currentMockupIndex].alt}
-                      className="w-80 h-[600px] object-contain drop-shadow-2xl"
-                    />
-                  </div>
-
-                  {/* Información del mockup */}
-                  <div className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/80 backdrop-blur-sm text-white px-4 py-2 rounded-full transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-                    <h3 className="text-sm font-semibold">{mockups[currentMockupIndex].title}</h3>
-                    <p className="text-xs opacity-90">{mockups[currentMockupIndex].description}</p>
-                  </div>
-
-                  {/* Botones de navegación */}
-                  <button
-                    onClick={prevMockup}
-                    className={`absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 transition-all duration-1000 delay-800 hover:scale-110 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-5'}`}
-                  >
-                    <ChevronLeft className="w-5 h-5 text-gray-700" />
-                  </button>
-                  
-                  <button
-                    onClick={nextMockup}
-                    className={`absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 transition-all duration-1000 delay-800 hover:scale-110 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-5'}`}
-                  >
-                    <ChevronRight className="w-5 h-5 text-gray-700" />
-                  </button>
-                </div>
-
-                {/* Indicadores de posición */}
-                <div className={`flex space-x-2 mt-6 transition-all duration-1000 delay-1200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-                  {mockups.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentMockupIndex(index)}
-                      className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                        index === currentMockupIndex 
-                          ? 'bg-[#E4512F] scale-125' 
-                          : 'bg-gray-300 hover:bg-gray-400'
-                      }`}
-                    />
-                  ))}
-                </div>
-
-                {/* Instrucciones de swipe */}
-                <div className={`mt-4 text-center transition-all duration-1000 delay-1400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-                  <p className="text-sm text-gray-600">
-                    Desliza para ver más mockups
-                  </p>
-                  <div className="flex justify-center mt-2">
-                    <div className="flex space-x-1">
-                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                      <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                    </div>
-                  </div>
-                </div>
+              {/* Tablet Mockup */}
+              <div className="relative transform rotate-6 hover:rotate-0 transition-transform duration-300 mt-8">
+                <img 
+                  src="/mockups/mockup_carrito.png" 
+                  alt="Carrito FlashFood"
+                  className="w-[28rem] h-auto drop-shadow-2xl"
+                />
               </div>
             </div>
           </div>
@@ -964,7 +652,7 @@ export default function LandingPage() {
               ¿Por qué elegir FlashFood?
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              La solución completa para modernizar tu restaurante y fidelizar a tus clientes
+              La solución completa con inteligencia artificial para modernizar tu restaurante y fidelizar a tus clientes
             </p>
           </div>
 
@@ -2024,10 +1712,10 @@ export default function LandingPage() {
                   <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
                   <p className="text-gray-600 text-sm mb-4">Respuesta en 2 horas</p>
                   <a 
-                    href="mailto:ventas@flashfood.com" 
+                    href="mailto:info@flashfoodapp.es" 
                     className="text-[#E4512F] hover:text-[#D64A3A] font-medium text-sm transition-colors"
                   >
-                    ventas@flashfood.com
+                    info@flashfoodapp.es
                   </a>
                 </div>
 
