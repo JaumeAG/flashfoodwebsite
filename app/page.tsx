@@ -2,19 +2,16 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { GiDonerKebab } from "react-icons/gi";
 // import anime from 'animejs/lib/anime.es.js'
-import { 
-  Smartphone, 
-  QrCode, 
-  Star, 
-  TrendingUp, 
-  Users, 
-  Shield, 
-  ArrowRight, 
+import {
+  Smartphone,
+  QrCode,
+  Star,
+  TrendingUp,
+  Users,
   CheckCircle,
-  Play,
   Menu,
-  ChefHat,
   BarChart3,
   ShoppingCart,
   Settings,
@@ -22,165 +19,44 @@ import {
   Heart,
   Award,
   Clock,
-  DollarSign,
-  Quote,
-  Lock,
-  Globe,
   Database,
-  Cloud,
   CreditCard,
   MessageSquare,
   Bell,
   Target,
   Rocket,
   Sparkles,
-  ThumbsUp,
   Building2,
   Coffee,
   Pizza,
   Utensils,
-  Wifi,
-  Server,
-  Key,
-  Eye,
   CheckCircle2,
   Brain,
-  Cpu,
-  Layers,
-  Activity,
-  TrendingDown,
-  BarChart,
-  PieChart,
-  LineChart,
-  Monitor,
-  Tablet,
-  Laptop,
-  Headphones,
-  Mic,
-  Camera,
-  Video,
-  FileText,
-  Download,
-  Upload,
-  Share,
-  Link,
-  ExternalLink,
-  Maximize,
-  Minimize,
-  RotateCcw,
   RefreshCw,
-  Power,
-  Battery,
-  Signal,
-  Bluetooth,
-  Radio,
-  Satellite,
-  Navigation,
-  MapPin,
-  Map,
-  Compass,
-  Route,
-  Flag,
-  Home,
-  Building,
-  Store,
   Hotel,
-  Car,
-  Plane,
-  Train,
-  Bus,
-  Ship,
-  Bike,
   Truck,
-  Package,
-  Box,
-  Archive,
-  Folder,
-  File,
-  FolderOpen,
-  Trash2,
-  Edit,
-  Copy,
-  Save,
-  Bookmark,
-  Tag,
-  Tags,
-  Filter,
-  Search,
-  X,
-  Plus,
-  Minus,
-  Equal,
-  Calculator,
-  Hash,
-  AtSign,
-  Percent,
-  Euro,
-  Wallet,
-  Banknote,
-  Coins,
-  Receipt,
-  Ticket,
   Gift,
   Printer,
-  Cake,
-  Crown,
-  Gem,
-  Diamond,
-  Trophy,
-  Medal,
-  Scroll,
-  Book,
-  BookOpen,
-  Library,
-  GraduationCap,
-  School,
-  University,
-  Stethoscope,
-  Pill,
-  Syringe,
-  Bandage,
-  Thermometer,
-  Droplet,
-  Wind,
   Sun,
-  Moon,
-  CloudRain,
-  CloudSnow,
-  CloudLightning,
-  Tornado,
-  Flame,
-  Snowflake,
-  TreePine,
-  Leaf,
-  Flower,
-  Rose,
-  Cherry,
-  Apple,
-  Banana,
-  Carrot,
-  Grape,
-  Fish,
-  Beef,
-  Egg,
-  Milk,
-  Cookie,
-  IceCream,
-  Lollipop,
-  Candy,
   Mail,
   Phone,
-  ChevronLeft,
-  ChevronRight
+  Martini,
+  Hamburger,
+  PartyPopper
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import ContentTab from "@/components/ContentTab"
+import Image from 'next/image';
+import { Fidelizacion } from '../components/ContentTab/Fidelizacion';
 
 export default function LandingPage() {
   const [isVisible, setIsVisible] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeTab, setActiveTab] = useState('restaurant')
+  const [activeTabContent, setActiveTabContent] = useState('dashboard')
+
   const router = useRouter()
   useEffect(() => {
     setIsVisible(true)
@@ -202,6 +78,11 @@ export default function LandingPage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isMobileMenuOpen])
 
+  const handleTabContent = (tab: string) => {
+    setActiveTabContent(tab);
+
+  }
+
   // Mockups estáticos
   const mockups = [
     {
@@ -212,7 +93,7 @@ export default function LandingPage() {
     },
     {
       src: "/mockups/mockup_carrito.png",
-      alt: "FlashFood Shopping Cart", 
+      alt: "FlashFood Shopping Cart",
       title: "Carrito Inteligente",
       description: "Gestiona tu pedido"
     },
@@ -233,41 +114,48 @@ export default function LandingPage() {
             {/* Logo */}
             <div className="flex items-center space-x-3">
               <div className="w-48 h-48 flex items-center justify-center">
-                <img 
-                  src="/branding/Light-Background.svg" 
-                  alt="FlashFood Logo" 
+                <img
+                  src="/branding/Light-Background.svg"
+                  alt="FlashFood Logo"
                   className="w-full h-full object-contain"
                 />
               </div>
-             
+
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              <button 
-                onClick={() => scrollToSection('features')} 
+              <button
+                onClick={() => scrollToSection('features')}
                 className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm cursor-pointer"
               >
                 Características
               </button>
-              <button 
-                onClick={() => scrollToSection('how-it-works')} 
+              <button
+                onClick={() => scrollToSection('how-it-works')}
                 className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm cursor-pointer"
               >
                 Cómo funciona
               </button>
-              <button 
-                onClick={() => scrollToSection('aura-assistant')} 
+              <button
+                onClick={() => scrollToSection('aura-assistant')}
                 className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm cursor-pointer"
               >
                 AURA
               </button>
-              <button 
-                onClick={() => scrollToSection('contact')} 
+              <button
+                onClick={() => scrollToSection('team')}
+                className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm cursor-pointer"
+              >
+                Equipo
+              </button>
+              <button
+                onClick={() => scrollToSection('contact')}
                 className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm cursor-pointer"
               >
                 Contacto
               </button>
+
             </div>
 
             {/* Desktop Buttons */}
@@ -276,8 +164,8 @@ export default function LandingPage() {
 
             {/* Mobile Menu */}
             <div className="lg:hidden flex items-center space-x-2">
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 size="sm"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="text-gray-700 hover:text-[#E4512F] hover:bg-[#F7F3F1]"
@@ -293,50 +181,60 @@ export default function LandingPage() {
       {isMobileMenuOpen && (
         <>
           {/* Overlay para cerrar el menú */}
-          <div 
+          <div
             className="lg:hidden fixed inset-0 bg-black bg-opacity-25 z-40"
             onClick={() => setIsMobileMenuOpen(false)}
           ></div>
-          
+
           {/* Menú móvil */}
           <div className="lg:hidden fixed top-16 left-0 right-0 z-50 bg-white border-b border-gray-100 shadow-lg">
             <div className="px-4 py-3 space-y-2">
-              <button 
+              <button
                 onClick={() => {
                   scrollToSection('features')
                   setIsMobileMenuOpen(false)
-                }} 
+                }}
                 className="block w-full text-left text-gray-700 hover:text-brand-primary transition-all duration-200 font-medium py-2"
               >
                 Características
               </button>
-              <button 
+              <button
                 onClick={() => {
                   scrollToSection('how-it-works')
                   setIsMobileMenuOpen(false)
-                }} 
+                }}
                 className="block w-full text-left text-gray-700 hover:text-brand-primary transition-all duration-200 font-medium py-2"
               >
                 Cómo funciona
               </button>
-              <button 
+              <button
                 onClick={() => {
                   scrollToSection('aura-assistant')
                   setIsMobileMenuOpen(false)
-                }} 
+                }}
                 className="block w-full text-left text-gray-700 hover:text-brand-primary transition-all duration-200 font-medium py-2"
               >
                 AURA
               </button>
-              <button 
+              <button
+                onClick={() => {
+                  scrollToSection('team')
+                  setIsMobileMenuOpen(false)
+                }}
+                className="block w-full text-left text-gray-700 hover:text-brand-primary transition-all duration-200 font-medium py-2"
+              >
+                Equipo
+              </button>
+              <button
                 onClick={() => {
                   scrollToSection('contact')
                   setIsMobileMenuOpen(false)
-                }} 
+                }}
                 className="block w-full text-left text-gray-700 hover:text-brand-primary transition-all duration-200 font-medium py-2"
               >
                 Contacto
               </button>
+
             </div>
           </div>
         </>
@@ -388,8 +286,8 @@ export default function LandingPage() {
             <div className={`hidden lg:flex items-center justify-center space-x-2 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
               {/* Smartphone Mockup */}
               <div className="relative transform -rotate-6 hover:rotate-0 transition-transform duration-300">
-                <img 
-                  src="/mockups/mockup_carta_digital.png" 
+                <img
+                  src="/mockups/mockup_carta_digital.png"
                   alt="Carta digital FlashFood"
                   className="w-96 h-auto drop-shadow-2xl"
                 />
@@ -397,8 +295,8 @@ export default function LandingPage() {
 
               {/* Tablet Mockup */}
               <div className="relative transform rotate-6 hover:rotate-0 transition-transform duration-300 mt-8">
-                <img 
-                  src="/mockups/mockup_carrito.png" 
+                <img
+                  src="/mockups/mockup_carrito.png"
                   alt="Carrito FlashFood"
                   className="w-[28rem] h-auto drop-shadow-2xl"
                 />
@@ -415,21 +313,18 @@ export default function LandingPage() {
         <div className="absolute top-0 left-0 w-96 h-96 bg-[#E4512F]/3 rounded-full blur-3xl -translate-x-48 -translate-y-48 animate-pulse"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#D64A3A]/3 rounded-full blur-3xl translate-x-48 translate-y-48 animate-pulse"></div>
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-to-r from-[#E4512F]/3 to-[#D64A3A]/3 rounded-full blur-2xl -translate-x-32 -translate-y-32 animate-bounce"></div>
-        
+
         <div className="max-w-7xl mx-auto relative">
           {/* Enhanced Header */}
           <div className="text-center mb-20 sm:mb-24">
-            <div className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#E4512F] to-[#D64A3A] backdrop-blur-sm border border-[#E4512F]/30 rounded-full text-white text-sm font-medium mb-8 shadow-xl">
-              <Rocket className="w-5 h-5 mr-2 animate-pulse" />
-              El futuro de la gastronomía
-            </div>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 bg-gradient-to-r from-gray-900 via-[#2E2523] to-[#2E2523] bg-clip-text text-transparent leading-tight">
-              La experiencia gastronómica del futuro
+              Un sistema sencillo y fácil de usar
             </h2>
             <p className="text-xl sm:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Descubre cómo FlashFood transforma cada momento en tu restaurante con tecnología de vanguardia
+              Te falcilita la gestión de tu restaurante y te ahorra tiempo y dinero.
             </p>
-            
+
+
             {/* Enhanced Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto">
               <div className="text-center group">
@@ -451,382 +346,159 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Enhanced Main Visual Grid */}
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center mb-20 sm:mb-24">
-            {/* Left Side - Interactive Restaurant Scene */}
-            <div className="relative group">
-              <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 relative overflow-hidden border border-gray-200 group-hover:border-[#E4512F]/50 transition-all duration-500 group-hover:scale-105">
-                {/* Enhanced Animated Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#E4512F]/5 to-[#D64A3A]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                {/* Restaurant Interior Mockup - Enhanced */}
-                <div className="bg-gradient-to-br from-[#F7F3F1]/90 to-[#F7F3F1]/90 rounded-2xl p-6 relative backdrop-blur-sm">
-                  {/* Enhanced Tables with QR codes */}
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="bg-white/90 rounded-xl p-4 shadow-lg relative group-hover:scale-105 transition-transform duration-300 hover:shadow-xl">
-                      <div className="w-10 h-10 bg-black rounded-lg mb-2 flex items-center justify-center group-hover:animate-pulse">
-                        <QrCode className="w-5 h-5 text-white" />
-                      </div>
-                      <div className="text-xs text-gray-600 font-medium">Mesa 1</div>
-                      <div className="text-xs text-green-600 font-semibold flex items-center">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                        Ocupada
-                      </div>
+          {/* Alternating Image-Text Sections */}
+          <div className="space-y-16 lg:space-y-24 mb-20 sm:mb-24">
+            {/* Row 1: Image left, Text right */}
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              <div className="relative">
+                <img
+                  src="/bannerweb/2149303447.jpg"
+                  alt="Persona escaneando un código QR con el móvil"
+                  className="w-full h-auto rounded-3xl shadow-2xl border border-gray-200"
+                />
+              </div>
+              <div>
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">Los clientes piden desde su móvil</h3>
+                <div className="mt-10 flex flex-col space-y-6 max-w-2xl mx-auto text-left">
+                  <div className="flex items-start gap-3 bg-white/70 backdrop-blur rounded-2xl p-4 border border-gray-200">
+                    <div className="w-8 h-8 rounded-full bg-[#FFF0EB] flex items-center justify-center shrink-0">
+                      <QrCode className="w-4 h-4 text-[#E4512F]" />
                     </div>
-                    <div className="bg-white/90 rounded-xl p-4 shadow-lg relative group-hover:scale-105 transition-transform duration-300 hover:shadow-xl">
-                      <div className="w-10 h-10 bg-black rounded-lg mb-2 flex items-center justify-center">
-                        <QrCode className="w-5 h-5 text-white" />
-                      </div>
-                      <div className="text-xs text-gray-600 font-medium">Mesa 2</div>
-                      <div className="text-xs text-gray-400 flex items-center">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full mr-2"></div>
-                        Libre
-                      </div>
-                    </div>
+                    <p className="text-gray-700 leading-snug">Escanea el QR, ve el menú y pide al momento.</p>
                   </div>
-                  
-                  {/* Enhanced Customer using phone */}
-                  <div className="flex items-center justify-center mb-6">
-                    <div className="bg-white/90 rounded-2xl p-6 shadow-xl relative group-hover:scale-105 transition-transform duration-300 hover:shadow-2xl">
-                      <div className="w-20 h-28 bg-gray-900 rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
-                        <Smartphone className="w-10 h-10 text-white" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#E4512F]/20 to-transparent"></div>
-                        <div className="absolute top-2 right-2 w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      </div>
-                      <div className="text-xs text-center text-gray-600 font-medium">Cliente escaneando QR</div>
-                      <div className="text-xs text-center text-[#E4512F] mt-1 font-semibold">● Conectado</div>
+                  <div className="flex items-start gap-3 bg-white/70 backdrop-blur rounded-2xl p-4 border border-gray-200">
+                    <div className="w-8 h-8 rounded-full bg-[#FFF0EB] flex items-center justify-center shrink-0">
+                      <CheckCircle className="w-4 h-4 text-[#E4512F]" />
                     </div>
+                    <p className="text-gray-700 leading-snug">El pedido llega a cocina/barra organizado, sin errores.</p>
                   </div>
-
-                  {/* Enhanced Kitchen/Bar area */}
-                  <div className="bg-gradient-to-r from-[#F7F3F1]/80 to-[#F7F3F1]/80 rounded-xl p-4 relative overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <ChefHat className="w-6 h-6 text-[#E4512F] mr-2 group-hover:animate-bounce" />
-                        <span className="text-sm font-semibold text-gray-700">Cocina</span>
-                      </div>
-                      <div className="bg-green-500 text-white text-xs px-3 py-1 rounded-full font-semibold group-hover:scale-110 transition-transform duration-300 animate-pulse">
-                        Pedido #123
-                      </div>
+                  <div className="flex items-start gap-3 bg-white/70 backdrop-blur rounded-2xl p-4 border border-gray-200">
+                    <div className="w-8 h-8 rounded-full bg-[#FFF0EB] flex items-center justify-center shrink-0">
+                      <CreditCard className="w-4 h-4 text-[#E4512F]" />
                     </div>
-                    <div className="mt-2 text-xs text-gray-600">Preparando en 15 min</div>
+                    <p className="text-gray-700 leading-snug">Pago y facturas al instante; todo queda registrado.</p>
                   </div>
-                </div>
-
-                {/* Enhanced Floating elements */}
-                <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 animate-bounce">
-                  <Star className="w-10 h-10 text-white group-hover:animate-pulse" />
-                </div>
-                <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-400 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:-rotate-12 transition-all duration-500 animate-bounce">
-                  <CheckCircle className="w-8 h-8 text-white group-hover:animate-pulse" />
-                </div>
-                <div className="absolute top-1/2 -right-8 w-12 h-12 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 animate-bounce">
-                  <Zap className="w-6 h-6 text-white" />
+                  <div className="flex items-start gap-3 bg-white/70 backdrop-blur rounded-2xl p-4 border border-gray-200">
+                    <div className="w-8 h-8 rounded-full bg-[#FFF0EB] flex items-center justify-center shrink-0">
+                      <Gift className="w-4 h-4 text-[#E4512F]" />
+                    </div>
+                    <p className="text-gray-700 leading-snug">El cliente recibe su fidelización.</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Side - Enhanced Features */}
-            <div className="space-y-10">
-              <div className="flex items-start space-x-6 group">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
-                  <Monitor className="w-8 h-8 text-white group-hover:animate-pulse" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-[#E4512F] transition-colors duration-300">
-                    Menú Digital Interactivo
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed text-lg">
-                    Los clientes escanean el QR y acceden a un menú digital completo con fotos, precios y opciones de personalización en tiempo real.
-                  </p>
-                  <div className="mt-4 flex items-center text-[#E4512F] font-semibold text-sm">
-                    <Sparkles className="w-4 h-4 mr-2 group-hover:animate-spin" />
-                    Experiencia inmersiva
+            {/* Row 2: Text left, Image right */}
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              <div className="order-2 lg:order-1">
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">El equipo recibe todo al instante</h3>
+                <div className="mt-10 flex flex-col space-y-6 max-w-2xl mx-auto text-left">
+                  <div className="flex items-start gap-3 bg-white/70 backdrop-blur rounded-2xl p-4 border border-gray-200">
+                    <div className="w-8 h-8 rounded-full bg-[#FFF0EB] flex items-center justify-center shrink-0">
+                      <BarChart3 className="w-4 h-4 text-[#E4512F]" />
+                    </div>
+                    <p className="text-gray-700 leading-snug">Pedidos organizados y visibles al momento.</p>
+                  </div>
+                  <div className="flex items-start gap-3 bg-white/70 backdrop-blur rounded-2xl p-4 border border-gray-200">
+                    <div className="w-8 h-8 rounded-full bg-[#FFF0EB] flex items-center justify-center shrink-0">
+                      <CheckCircle className="w-4 h-4 text-[#E4512F]" />
+                    </div>
+                    <p className="text-gray-700 leading-snug">Menos errores y mejor coordinación.</p>
+                  </div>
+                  <div className="flex items-start gap-3 bg-white/70 backdrop-blur rounded-2xl p-4 border border-gray-200">
+                    <div className="w-8 h-8 rounded-full bg-[#FFF0EB] flex items-center justify-center shrink-0">
+                      <Clock className="w-4 h-4 text-[#E4512F]" />
+                    </div>
+                    <p className="text-gray-700 leading-snug">Servicio más rápido y eficiente.</p>
                   </div>
                 </div>
               </div>
-
-              <div className="flex items-start space-x-6 group">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
-                  <Tablet className="w-8 h-8 text-white group-hover:animate-pulse" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-[#E4512F] transition-colors duration-300">
-                    Pedidos Sin Contacto
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed text-lg">
-                    Sistema completamente digital que reduce el tiempo de servicio y mejora la experiencia del cliente.
-                  </p>
-                  <div className="mt-4 flex items-center text-[#D64A3A] font-semibold text-sm">
-                    <Zap className="w-4 h-4 mr-2 group-hover:animate-bounce" />
-                    Servicio 3x más rápido
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-6 group">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
-                  <PieChart className="w-8 h-8 text-white group-hover:animate-pulse" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-[#E4512F] transition-colors duration-300">
-                    Analytics en Tiempo Real
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed text-lg">
-                    Dashboard completo con estadísticas de ventas, productos más populares y rendimiento del negocio con IA predictiva.
-                  </p>
-                  <div className="mt-4 flex items-center text-[#D64A3A] font-semibold text-sm">
-                    <Brain className="w-4 h-4 mr-2 group-hover:animate-spin" />
-                    Inteligencia artificial
-                  </div>
-                </div>
+              <div className="order-1 lg:order-2 relative">
+                <img
+                  src="/bannerweb/2452.jpg"
+                  alt="Camarero tomando nota en una mesa"
+                  className="w-full h-auto rounded-3xl shadow-2xl border border-gray-200"
+                />
               </div>
             </div>
           </div>
 
-          {/* Enhanced Restaurant Types Showcase */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-lg relative overflow-hidden border border-gray-200 hover:border-[#E4512F]/50 hover:scale-105">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#E4512F]/20 to-[#D64A3A]/20 rounded-full -translate-y-16 translate-x-16 group-hover:scale-110 transition-transform duration-500"></div>
-              <CardContent className="p-8 relative">
-                <div className="w-20 h-20 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-xl">
-                  <Coffee className="w-10 h-10 text-white group-hover:animate-pulse" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 drop-shadow-lg">Cafeterías</h3>
-                <p className="text-gray-600 text-sm mb-6 leading-relaxed drop-shadow-md">
-                  Perfecto para cafés y bares con servicio rápido y menús estacionales que se actualizan automáticamente.
-                </p>
-                <div className="flex items-center text-[#E4512F] font-bold text-base drop-shadow-xl">
-                  <Clock className="w-5 h-5 mr-2 group-hover:animate-spin" />
-                  Servicio 2x más rápido
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-lg relative overflow-hidden border border-gray-200 hover:border-[#E4512F]/50 hover:scale-105">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#E4512F]/20 to-[#D64A3A]/20 rounded-full -translate-y-16 translate-x-16 group-hover:scale-110 transition-transform duration-500"></div>
-              <CardContent className="p-8 relative">
-                <div className="w-20 h-20 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-xl">
-                  <Pizza className="w-10 h-10 text-white group-hover:animate-pulse" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 drop-shadow-lg">Restaurantes</h3>
-                <p className="text-gray-600 text-sm mb-6 leading-relaxed drop-shadow-md">
-                  Ideal para restaurantes con menús extensos y opciones de personalización avanzada para cada cliente.
-                </p>
-                <div className="flex items-center text-[#D64A3A] font-bold text-base drop-shadow-xl">
-                  <TrendingUp className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                  +40% aumento en ventas
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-lg relative overflow-hidden border border-gray-200 hover:border-[#E4512F]/50 sm:col-span-2 lg:col-span-1 hover:scale-105">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#E4512F]/20 to-[#D64A3A]/20 rounded-full -translate-y-16 translate-x-16 group-hover:scale-110 transition-transform duration-500"></div>
-              <CardContent className="p-8 relative">
-                <div className="w-20 h-20 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-xl">
-                  <Truck className="w-10 h-10 text-white group-hover:animate-pulse" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 drop-shadow-lg">Food Trucks</h3>
-                <p className="text-gray-600 text-sm mb-6 leading-relaxed drop-shadow-md">
-                  Solución móvil perfecta para eventos y ubicaciones temporales con conectividad en tiempo real.
-                </p>
-                <div className="flex items-center text-[#E4512F] font-bold text-base drop-shadow-xl">
-                  <Wifi className="w-5 h-5 mr-2 group-hover:animate-pulse" />
-                  Conexión en tiempo real
-                </div>
-              </CardContent>
-            </Card>
+          {/* Tipos de negocios compatibles */}
+          <div className="text-center mb-10">
+            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Para todo tipo de negocios</h3>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7F5] border border-[#E4512F]/30 text-[#2E2523] shadow-sm">
+              <Martini className="w-4 h-4 text-[#E4512F]" /> Pubs
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7F5] border border-[#E4512F]/30 text-[#2E2523] shadow-sm">
+              <Hamburger className="w-4 h-4 text-[#E4512F]" /> Hamburgueserías
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7F5] border border-[#E4512F]/30 text-[#2E2523] shadow-sm">
+              <Pizza className="w-4 h-4 text-[#E4512F]" /> Pizzerías
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7F5] border border-[#E4512F]/30 text-[#2E2523] shadow-sm">
+              <Sun className="w-4 h-4 text-[#E4512F]" /> Chiringuitos
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7F5] border border-[#E4512F]/30 text-[#2E2523] shadow-sm">
+              <Truck className="w-4 h-4 text-[#E4512F]" /> Food trucks
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7F5] border border-[#E4512F]/30 text-[#2E2523] shadow-sm">
+              <Hotel className="w-4 h-4 text-[#E4512F]" /> Hoteles
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7F5] border border-[#E4512F]/30 text-[#2E2523] shadow-sm">
+              <Utensils className="w-4 h-4 text-[#E4512F]" /> Restaurantes
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7F5] border border-[#E4512F]/30 text-[#2E2523] shadow-sm">
+              <Coffee className="w-4 h-4 text-[#E4512F]" /> Cafeterías
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7F5] border border-[#E4512F]/30 text-[#2E2523] shadow-sm">
+              <GiDonerKebab className="w-4 h-4 text-[#E4512F]" /> Kebabs
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7F5] border border-[#E4512F]/30 text-[#2E2523] shadow-sm">
+              <PartyPopper className="w-4 h-4 text-[#E4512F]" /> Discotecas
+            </span>
           </div>
         </div>
       </section>
 
       {/* Features Section - Interactive */}
-      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1]">
+      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1] overflow-x-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 bg-[#F7F3F1] text-[#E4512F] rounded-full text-sm font-medium mb-6">
-              <Sparkles className="w-4 h-4 mr-2" />
-              La elección inteligente
-            </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              ¿Por qué elegir FlashFood?
+              Soluciones que transforman tu negocio: gana más, trabaja menos
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              La solución completa con inteligencia artificial para modernizar tu restaurante y fidelizar a tus clientes
+              Aquí encontrarás las herramientas que realmente marcan la diferencia. Desde IA hasta pedidos digitales, estas soluciones no son opcionales, son las que te harán crecer. Es momento de digitalizar tu negocio y cambiar las reglas del juego.
             </p>
           </div>
+          <div className="grid ">
+            <div className="w-full flex flex-col items-center bg-gray-100 rounded-2xl p-4 border border-gray-200 min-w-0">
+              <div className="bg-white w-full max-w-full flex items-center flex-nowrap md:flex-wrap justify-start md:justify-between gap-2 sm:gap-3 border border-gray-200 rounded-2xl sm:p-4 pr-4 overflow-x-auto md:overflow-x-visible whitespace-nowrap md:whitespace-normal [-webkit-overflow-scrolling:touch] snap-x md:snap-none snap-mandatory scroll-smooth touch-pan-x overscroll-x-contain -mx-4 sm:mx-0 sm:px-0 min-w-0">
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Para Clientes - Interactive */}
-            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 bg-gradient-to-br from-[#F7F3F1] to-[#F7F3F1] hover:from-[#F7F3F1] hover:to-[#F7F3F1] transform hover:-translate-y-2 hover:scale-105">
-              <CardHeader className="relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#E4512F]/10 to-[#D64A3A]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg group-hover:shadow-xl">
-                    <Users className="w-8 h-8 text-white group-hover:animate-pulse" />
-                  </div>
-                  <CardTitle className="text-2xl group-hover:text-[#E4512F] transition-colors duration-300">Para Clientes</CardTitle>
-                  <CardDescription className="text-base group-hover:text-gray-700 transition-colors duration-300">
-                    Experiencia gastronómica digital
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="relative">
-                <ul className="space-y-4">
-                  <li className="flex items-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transition-transform">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="font-medium">Menú digital interactivo</span>
-                  </li>
-                  <li className="flex items-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transition-transform">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="font-medium">Pedidos sin contacto</span>
-                  </li>
-                  <li className="flex items-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transition-transform">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="font-medium">Sistema de puntos y recompensas</span>
-                  </li>
-                  <li className="flex items-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transition-transform">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="font-medium">Pago integrado seguro</span>
-                  </li>
-                  <li className="flex items-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transition-transform">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="font-medium">Historial de pedidos</span>
-                  </li>
-                </ul>
-                <div className="mt-6 pt-4 border-t border-orange-200 group-hover:border-orange-300 transition-colors duration-300">
-                  <div className="flex items-center text-orange-600 font-semibold text-sm">
-                    <Star className="w-4 h-4 mr-2 group-hover:animate-spin" />
-                    Experiencia premium garantizada
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                <button className={activeTabContent === 'dashboard' ? 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-[#E4512F] text-white border border-gray-200 rounded-2xl px-4 py-2 text-sm sm:text-base shadow-sm cursor-pointer' : 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-white text-gray-700 hover:text-[#E4512F] rounded-2xl px-4 py-2 text-sm sm:text-base border border-transparent hover:border-[#E4512F]/30 cursor-pointer'} onClick={() => handleTabContent('dashboard')}>Dashboard</button>
 
-            {/* Para Restaurantes - Interactive */}
-            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 bg-gradient-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 transform hover:-translate-y-2 hover:scale-105">
-              <CardHeader className="relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg group-hover:shadow-xl">
-                    <Building2 className="w-8 h-8 text-white group-hover:animate-pulse" />
-                  </div>
-                  <CardTitle className="text-2xl group-hover:text-blue-600 transition-colors duration-300">Para Restaurantes</CardTitle>
-                  <CardDescription className="text-base group-hover:text-gray-700 transition-colors duration-300">
-                    Gestión completa y moderna
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="relative">
-                <ul className="space-y-4">
-                  <li className="flex items-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transition-transform">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="font-medium">Dashboard de administración</span>
-                  </li>
-                  <li className="flex items-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transition-transform">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="font-medium">Estadísticas en tiempo real</span>
-                  </li>
-                  <li className="flex items-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transition-transform">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="font-medium">Gestión de menú digital</span>
-                  </li>
-                  <li className="flex items-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transition-transform">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="font-medium">Control de ventas</span>
-                  </li>
-                  <li className="flex items-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300 hover:translate-x-2 transition-transform">
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="font-medium">QR codes para mesas</span>
-                  </li>
-                </ul>
-                <div className="mt-6 pt-4 border-t border-blue-200 group-hover:border-blue-300 transition-colors duration-300">
-                  <div className="flex items-center text-blue-600 font-semibold text-sm">
-                    <BarChart3 className="w-4 h-4 mr-2 group-hover:animate-bounce" />
-                    Control total de tu negocio
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                {/* <button className={activeTabContent === 'tpv' ? 'bg-[#E4512F] text-white border border-gray-200 border-rounded-2xl p-2 rounded-2xl cursor-pointer' : 'bg-white text-black cursor-pointer'} onClick={() => handleTabContent('tpv')}>TPV</button> */}
 
-            {/* Resultados Comprobados - Interactive */}
-            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 bg-gradient-to-br from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transform hover:-translate-y-2 hover:scale-105 md:col-span-2 lg:col-span-1">
-              <CardHeader className="relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg group-hover:shadow-xl">
-                    <TrendingUp className="w-8 h-8 text-white group-hover:animate-pulse" />
-                  </div>
-                  <CardTitle className="text-2xl group-hover:text-green-600 transition-colors duration-300">Resultados Comprobados</CardTitle>
-                  <CardDescription className="text-base group-hover:text-gray-700 transition-colors duration-300">
-                    Impacto real en tu negocio
-                  </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="relative">
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between p-4 bg-white/50 rounded-xl group-hover:bg-white/80 transition-colors duration-300">
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                        <TrendingUp className="w-5 h-5 text-green-600" />
-                      </div>
-                      <span className="text-gray-700 font-medium">Aumento de ventas</span>
-                    </div>
-                    <Badge className="bg-green-100 text-green-700 px-3 py-1 text-sm font-bold group-hover:scale-110 transition-transform duration-300">
-                      +40%
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-4 bg-white/50 rounded-xl group-hover:bg-white/80 transition-colors duration-300">
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                        <Clock className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <span className="text-gray-700 font-medium">Tiempo de servicio</span>
-                    </div>
-                    <Badge className="bg-blue-100 text-blue-700 px-3 py-1 text-sm font-bold group-hover:scale-110 transition-transform duration-300">
-                      -30%
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-4 bg-white/50 rounded-xl group-hover:bg-white/80 transition-colors duration-300">
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                        <Heart className="w-5 h-5 text-orange-600" />
-                      </div>
-                      <span className="text-gray-700 font-medium">Satisfacción cliente</span>
-                    </div>
-                    <Badge className="bg-[#F7F3F1] text-[#E4512F] px-3 py-1 text-sm font-bold group-hover:scale-110 transition-transform duration-300">
-                      +60%
-                    </Badge>
-                  </div>
-                </div>
-                <div className="mt-6 pt-4 border-t border-green-200 group-hover:border-green-300 transition-colors duration-300">
-                  <div className="flex items-center text-green-600 font-semibold text-sm">
-                    <Award className="w-4 h-4 mr-2 group-hover:animate-spin" />
-                    Resultados garantizados
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                <button className={activeTabContent === 'analitica' ? 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-[#E4512F] text-white border border-gray-200 rounded-2xl px-4 py-2 text-sm sm:text-base shadow-sm cursor-pointer' : 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-white text-gray-700 hover:text-[#E4512F] rounded-2xl px-4 py-2 text-sm sm:text-base border border-transparent hover:border-[#E4512F]/30 cursor-pointer'} onClick={() => handleTabContent('analitica')}>Analítica</button>
+
+                <button className={activeTabContent === 'ventas' ? 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-[#E4512F] text-white border border-gray-200 rounded-2xl px-4 py-2 text-sm sm:text-base shadow-sm cursor-pointer' : 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-white text-gray-700 hover:text-[#E4512F] rounded-2xl px-4 py-2 text-sm sm:text-base border border-transparent hover:border-[#E4512F]/30 cursor-pointer'} onClick={() => handleTabContent('ventas')}>Ventas</button>
+
+                <button className={activeTabContent === 'comandero' ? 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-[#E4512F] text-white border border-gray-200 rounded-2xl px-4 py-2 text-sm sm:text-base shadow-sm cursor-pointer' : 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-white text-gray-700 hover:text-[#E4512F] rounded-2xl px-4 py-2 text-sm sm:text-base border border-transparent hover:border-[#E4512F]/30 cursor-pointer'} onClick={() => handleTabContent('comandero')}>Comandero</button>
+
+                <button className={activeTabContent === 'asistente-ia' ? 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-[#E4512F] text-white border border-gray-200 rounded-2xl px-4 py-2 text-sm sm:text-base shadow-sm cursor-pointer' : 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-white text-gray-700 hover:text-[#E4512F] rounded-2xl px-4 py-2 text-sm sm:text-base border border-transparent hover:border-[#E4512F]/30 cursor-pointer'} onClick={() => handleTabContent('asistente-ia')}>Asistente IA</button>
+
+                <button className={activeTabContent === 'clientes' ? 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-[#E4512F] text-white border border-gray-200 rounded-2xl px-4 py-2 text-sm sm:text-base shadow-sm cursor-pointer' : 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-white text-gray-700 hover:text-[#E4512F] rounded-2xl px-4 py-2 text-sm sm:text-base border border-transparent hover:border-[#E4512F]/30 cursor-pointer'} onClick={() => handleTabContent('clientes')} >Clientes</button>
+
+                <button className={activeTabContent === 'fidelizacion' ? 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-[#E4512F] text-white border border-gray-200 rounded-2xl px-4 py-2 text-sm sm:text-base shadow-sm cursor-pointer' : 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-white text-gray-700 hover:text-[#E4512F] rounded-2xl px-4 py-2 text-sm sm:text-base border border-transparent hover:border-[#E4512F]/30 cursor-pointer'} onClick={() => handleTabContent('fidelizacion')}>Fidelización</button>
+
+
+              </div>
+              <div className="bg-white rounded-2xl p-4 border border-gray-200 overflow-x-hidden">
+                <ContentTab contentTab={activeTabContent} />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -835,10 +507,6 @@ export default function LandingPage() {
       <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-white to-blue-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-6">
-              <Zap className="w-4 h-4 mr-2" />
-              Proceso súper fácil
-            </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
               Cómo funciona FlashFood
             </h2>
@@ -851,23 +519,21 @@ export default function LandingPage() {
           <div className="flex justify-center mb-12">
             <div className="bg-white rounded-2xl p-2 shadow-lg border border-gray-200">
               <div className="flex space-x-2">
-                <button 
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                    activeTab === 'restaurant' 
-                      ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg' 
-                      : 'text-gray-600 hover:text-orange-600 hover:bg-orange-50'
-                  }`}
+                <button
+                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${activeTab === 'restaurant'
+                    ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
+                    : 'text-gray-600 hover:text-orange-600 hover:bg-orange-50'
+                    }`}
                   onClick={() => setActiveTab('restaurant')}
                 >
                   <Building2 className="w-5 h-5 mr-2 inline" />
                   Para Restaurantes
                 </button>
-                <button 
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                    activeTab === 'customer' 
-                      ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg' 
-                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
-                  }`}
+                <button
+                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${activeTab === 'customer'
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
+                    : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                    }`}
                   onClick={() => setActiveTab('customer')}
                 >
                   <Users className="w-5 h-5 mr-2 inline" />
@@ -1232,7 +898,7 @@ export default function LandingPage() {
               Conoce a AURA, tu asistente inteligente
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              AURA es tu asistente personal de IA diseñado específicamente para hosteleros. 
+              AURA es tu asistente personal de IA diseñado específicamente para hosteleros.
               Trabaja continuamente para optimizar tu negocio, desde análisis de ventas hasta gestión operativa.
             </p>
           </div>
@@ -1269,7 +935,7 @@ export default function LandingPage() {
                       </div>
                       <div className="bg-gray-700/50 rounded-lg p-3 max-w-xs">
                         <p className="text-sm text-gray-200">
-                          Hola! He analizado tus ventas de esta semana y veo que las pizzas están siendo muy populares. 
+                          Hola! He analizado tus ventas de esta semana y veo que las pizzas están siendo muy populares.
                           ¿Te ayudo a optimizar tu menú?
                         </p>
                       </div>
@@ -1299,6 +965,14 @@ export default function LandingPage() {
                       </div>
                     </div>
 
+                    <div className="flex items-start space-x-3 justify-end">
+                      <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg p-3 max-w-xs">
+                        <p className="text-sm text-white">
+                          Sí, adelante
+                        </p>
+                      </div>
+                    </div>
+
                     <div className="flex items-start space-x-3">
                       <div className="w-8 h-8 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-full flex items-center justify-center flex-shrink-0">
                         <Brain className="w-4 h-4 text-white" />
@@ -1313,12 +987,12 @@ export default function LandingPage() {
                 </div>
 
                 {/* Floating Elements */}
-                <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                {/* <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-full flex items-center justify-center shadow-lg animate-bounce">
                   <MessageSquare className="w-8 h-8 text-white" />
                 </div>
                 <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-full flex items-center justify-center shadow-lg">
                   <Zap className="w-6 h-6 text-white" />
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -1329,7 +1003,7 @@ export default function LandingPage() {
                   ¿Qué puede hacer AURA por ti?
                 </h3>
                 <p className="text-gray-600 text-lg">
-                  AURA es más que un chatbot. Es tu socio inteligente diseñado específicamente para hosteleros, 
+                  AURA es más que un chatbot. Es tu socio inteligente diseñado específicamente para hosteleros,
                   que entiende las necesidades únicas de tu restaurante y trabaja para optimizar tu rentabilidad.
                 </p>
               </div>
@@ -1342,7 +1016,7 @@ export default function LandingPage() {
                   <div>
                     <h4 className="text-xl font-semibold text-gray-900 mb-2">Optimización de Menú Inteligente</h4>
                     <p className="text-gray-600">
-                      AURA analiza tus datos de ventas y comportamiento de clientes para sugerir optimizaciones de menú, 
+                      AURA analiza tus datos de ventas y comportamiento de clientes para sugerir optimizaciones de menú,
                       precios y promociones que maximicen tus ingresos.
                     </p>
                   </div>
@@ -1355,7 +1029,7 @@ export default function LandingPage() {
                   <div>
                     <h4 className="text-xl font-semibold text-gray-900 mb-2">Análisis Predictivo Avanzado</h4>
                     <p className="text-gray-600">
-                      Analiza tendencias, clima, eventos locales y comportamiento de clientes para predecir 
+                      Analiza tendencias, clima, eventos locales y comportamiento de clientes para predecir
                       demanda y sugerir estrategias de venta optimizadas.
                     </p>
                   </div>
@@ -1368,7 +1042,7 @@ export default function LandingPage() {
                   <div>
                     <h4 className="text-xl font-semibold text-gray-900 mb-2">Gestión de Clientes Inteligente</h4>
                     <p className="text-gray-600">
-                      AURA te ayuda a gestionar mejor a tus clientes: analiza sus preferencias, identifica clientes VIP, 
+                      AURA te ayuda a gestionar mejor a tus clientes: analiza sus preferencias, identifica clientes VIP,
                       sugiere estrategias de fidelización y optimiza la experiencia del cliente en tu restaurante.
                     </p>
                   </div>
@@ -1381,7 +1055,7 @@ export default function LandingPage() {
                   <div>
                     <h4 className="text-xl font-semibold text-gray-900 mb-2">Automatización de Procesos</h4>
                     <p className="text-gray-600">
-                      Automatiza tareas repetitivas como reportes, facturación, gestión de personal 
+                      Automatiza tareas repetitivas como reportes, facturación, gestión de personal
                       y optimización de horarios para maximizar la eficiencia.
                     </p>
                   </div>
@@ -1399,7 +1073,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-lg font-semibold mb-2 text-gray-900">Asistente Personal para Hosteleros</h3>
                 <p className="text-gray-600 text-sm">
-                  Conversa con AURA sobre tu negocio en lenguaje natural. Entiende las necesidades específicas 
+                  Conversa con AURA sobre tu negocio en lenguaje natural. Entiende las necesidades específicas
                   de la hostelería y aprende de cada interacción para ayudarte mejor.
                 </p>
               </CardContent>
@@ -1412,7 +1086,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-lg font-semibold mb-2 text-gray-900">Alertas de Negocio</h3>
                 <p className="text-gray-600 text-sm">
-                  Recibe notificaciones inteligentes sobre oportunidades de venta, tendencias del mercado 
+                  Recibe notificaciones inteligentes sobre oportunidades de venta, tendencias del mercado
                   y recomendaciones específicas para tu restaurante.
                 </p>
               </CardContent>
@@ -1425,7 +1099,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-lg font-semibold mb-2 text-gray-900">Automatización Operativa</h3>
                 <p className="text-gray-600 text-sm">
-                  AURA automatiza tareas operativas como generar reportes de ventas, crear promociones 
+                  AURA automatiza tareas operativas como generar reportes de ventas, crear promociones
                   automáticas y optimizar horarios de personal para tu restaurante.
                 </p>
               </CardContent>
@@ -1437,7 +1111,7 @@ export default function LandingPage() {
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">¿Por qué elegir AURA?</h3>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                AURA no es solo una herramienta, es tu socio inteligente diseñado específicamente para hosteleros, 
+                AURA no es solo una herramienta, es tu socio inteligente diseñado específicamente para hosteleros,
                 que crece contigo y se adapta a las necesidades únicas de tu restaurante.
               </p>
             </div>
@@ -1483,10 +1157,77 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Team Section */}
+      <section id="team" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-10 sm:mb-14">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Nuestro equipo</h2>
+            <p className="text-gray-600 max-w-3xl mx-auto">Personas encargadas del proyecto, comprometidas con tu éxito.</p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {/* Member 1 */}
+            {/* <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm text-center">
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-[#FFF0EB] flex items-center justify-center text-[#E4512F] text-2xl font-bold">AG</div>
+              <h3 className="text-lg font-semibold text-gray-900">Ana García</h3>
+              <p className="text-sm text-gray-600">CEO & Estrategia</p>
+              <p className="mt-3 text-sm text-gray-600">Visión de producto y crecimiento.</p>
+            </div> */}
+
+            {/* Member 2 */}
+            <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm text-center">
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-[#FFF0EB] flex items-center justify-center text-[#E4512F] text-2xl font-bold"><Image
+                src="/imageTeam/jaumefoto-bw.png"
+                alt="Santi Llinares"
+                width={80}
+                height={80}
+                sizes="(max-width: 640px) 64px, 80px"
+                className="rounded-full object-cover w-full h-full"
+              /></div>
+              <h3 className="text-lg font-semibold text-gray-900">Jaume Alcántara</h3>
+              <p className="text-sm text-gray-600">CTO & Co-Founder</p>
+              <p className="mt-3 text-sm text-gray-600">Arquitectura, seguridad y rendimiento.</p>
+            </div>
+
+            {/* Member 3 */}
+            <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm text-center">
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-[#FFF0EB] flex items-center justify-center text-[#E4512F] text-2xl font-bold"><Image
+                src="/imageTeam/ivanfoto-bw.jpeg"
+                alt="Santi Llinares"
+                width={80}
+                height={80}
+                sizes="(max-width: 640px) 64px, 80px"
+                className="rounded-full object-cover w-full h-full"
+              /></div>
+              <h3 className="text-lg font-semibold text-gray-900">Iván Rodríguez</h3>
+              <p className="text-sm text-gray-600">CGO & Co-Founder</p>
+              <p className="mt-3 text-sm text-gray-600">Expansión de la marca y desarrollo de productos.</p>
+            </div>
+
+            {/* Member 4 */}
+            <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm text-center">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full bg-[#FFF0EB] flex items-center justify-center overflow-hidden">
+                <Image
+                  src="/imageTeam/santifoto-bw.jpg"
+                  alt="Santi Llinares"
+                  width={80}
+                  height={80}
+                  sizes="(max-width: 640px) 64px, 80px"
+                  className="rounded-full object-cover w-full h-full"
+                />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Santi Llinares</h3>
+              <p className="text-sm text-gray-600">CSO & Co-Founders</p>
+              <p className="mt-3 text-sm text-gray-600">Encargado de marketing y ventas.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Section */}
       {/* <section id="pricing" className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50"> */}
-        {/* <div className="max-w-7xl mx-auto"> */}
-          {/* <div className="text-center mb-12 sm:mb-16">
+      {/* <div className="max-w-7xl mx-auto"> */}
+      {/* <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               Planes para cada restaurante
             </h2>
@@ -1495,9 +1236,9 @@ export default function LandingPage() {
             </p>
           </div> */}
 
-          {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto"> */}
-            {/* Plan Básico */}
-            {/* <Card className="border-2 border-gray-200 hover:border-orange-300 transition-all duration-300 flex flex-col h-full">
+      {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto"> */}
+      {/* Plan Básico */}
+      {/* <Card className="border-2 border-gray-200 hover:border-orange-300 transition-all duration-300 flex flex-col h-full">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl">Básico</CardTitle>
                 <div className="text-4xl font-bold text-gray-900">€49,90<span className="text-lg text-gray-500">/mes</span></div>
@@ -1536,8 +1277,8 @@ export default function LandingPage() {
               </CardContent>
             </Card> */}
 
-            {/* Plan Premium */}
-            {/* <Card className="border-2 border-orange-500 relative hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+      {/* Plan Premium */}
+      {/* <Card className="border-2 border-orange-500 relative hover:shadow-xl transition-all duration-300 flex flex-col h-full">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                 <Badge className="bg-orange-500 text-white px-4 py-1">Más Popular</Badge>
               </div>
@@ -1583,8 +1324,8 @@ export default function LandingPage() {
               </CardContent>
             </Card> */}
 
-            {/* Plan Enterprise */}
-            {/* <Card className="border-2 border-gray-200 hover:border-blue-300 transition-all duration-300 flex flex-col h-full">
+      {/* Plan Enterprise */}
+      {/* <Card className="border-2 border-gray-200 hover:border-blue-300 transition-all duration-300 flex flex-col h-full">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl">Enterprise</CardTitle>
                 <div className="text-4xl font-bold text-gray-900">Personalizado</div>
@@ -1614,8 +1355,8 @@ export default function LandingPage() {
                 </Button>
               </CardContent>
             </Card> */}
-          {/* </div> */}
-        {/* </div> */}
+      {/* </div> */}
+      {/* </div> */}
       {/* </section> */}
 
       {/* Sección de Contacto */}
@@ -1637,7 +1378,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Envíanos un mensaje</h3>
                 <p className="text-gray-600">Te responderemos en menos de 2 horas</p>
               </div>
-              
+
               <form className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -1663,7 +1404,7 @@ export default function LandingPage() {
                     />
                   </div>
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Teléfono
@@ -1674,7 +1415,7 @@ export default function LandingPage() {
                     placeholder="+34 600 000 000"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Mensaje *
@@ -1686,7 +1427,7 @@ export default function LandingPage() {
                     placeholder="Cuéntanos sobre tu restaurante y cómo podemos ayudarte..."
                   ></textarea>
                 </div>
-                
+
                 <button
                   type="submit"
                   className="w-full bg-gradient-to-r from-[#E4512F] to-[#D64A3A] hover:from-[#D64A3A] hover:to-[#E4512F] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
@@ -1711,8 +1452,8 @@ export default function LandingPage() {
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
                   <p className="text-gray-600 text-sm mb-4">Respuesta en 2 horas</p>
-                  <a 
-                    href="mailto:info@flashfoodapp.es" 
+                  <a
+                    href="mailto:info@flashfoodapp.es"
                     className="text-[#E4512F] hover:text-[#D64A3A] font-medium text-sm transition-colors"
                   >
                     info@flashfoodapp.es
@@ -1726,8 +1467,8 @@ export default function LandingPage() {
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">Teléfono</h3>
                   <p className="text-gray-600 text-sm mb-4">Lun-Vie 9:00-18:00</p>
-                  <a 
-                    href="tel:+34900123456" 
+                  <a
+                    href="tel:+34900123456"
                     className="text-[#E4512F] hover:text-[#D64A3A] font-medium text-sm transition-colors"
                   >
                     +34 900 123 456
@@ -1738,13 +1479,13 @@ export default function LandingPage() {
                 <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
                     </svg>
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">WhatsApp</h3>
                   <p className="text-gray-600 text-sm mb-4">Respuesta inmediata</p>
-                  <a 
-                    href="https://wa.me/34900123456" 
+                  <a
+                    href="https://wa.me/34900123456"
                     className="text-green-600 hover:text-green-700 font-medium text-sm transition-colors"
                   >
                     +34 900 123 456
@@ -1760,8 +1501,8 @@ export default function LandingPage() {
                   </div>
                   <h3 className="font-semibold text-white mb-2">Demo Gratis</h3>
                   <p className="text-white/90 text-sm mb-4">Prueba sin compromiso</p>
-                  <a 
-                    href="#contact" 
+                  <a
+                    href="#contact"
                     className="text-white hover:text-white/90 font-medium text-sm transition-colors"
                   >
                     Solicitar Demo
@@ -1773,6 +1514,8 @@ export default function LandingPage() {
         </div>
       </section>
 
+
+
       {/* Footer */}
       <footer className="bg-white border-t border-gray-100 py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1780,14 +1523,14 @@ export default function LandingPage() {
             {/* Logo */}
             <div className="flex items-center space-x-2">
               <div className="w-48 h-48 flex items-center justify-center">
-                <img 
-                  src="/branding/Light-Background.svg" 
-                  alt="FlashFood Logo" 
+                <img
+                  src="/branding/Light-Background.svg"
+                  alt="FlashFood Logo"
                   className="w-full h-full object-contain"
                 />
               </div>
             </div>
-            
+
             {/* Navigation Links */}
             <nav className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8 text-sm">
               <a href="#features" className="text-gray-600 hover:text-brand-primary transition-colors">
@@ -1802,8 +1545,11 @@ export default function LandingPage() {
               <a href="#contact" className="text-gray-600 hover:text-brand-primary transition-colors">
                 Contacto
               </a>
+              <a href="#team" className="text-gray-600 hover:text-brand-primary transition-colors">
+                Equipo
+              </a>
             </nav>
-            
+
             {/* Copyright */}
             <div className="text-center text-sm text-gray-500">
               <p>© 2025 FlashFood. Todos los derechos reservados.</p>
