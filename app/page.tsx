@@ -321,7 +321,7 @@ export default function LandingPage() {
               Un sistema sencillo y fácil de usar
             </h2>
             <p className="text-xl sm:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Te falcilita la gestión de tu restaurante y te ahorra tiempo y dinero.
+              Te facilita la gestión de tu restaurante, te ahorra tiempo y dinero.
             </p>
 
 
