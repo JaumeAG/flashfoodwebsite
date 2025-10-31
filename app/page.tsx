@@ -57,6 +57,17 @@ export default function LandingPage() {
   const [activeTab, setActiveTab] = useState('restaurant')
   const [activeTabContent, setActiveTabContent] = useState('dashboard')
 
+  // Estados del formulario de contacto
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [submitMessage, setSubmitMessage] = useState('')
+
   const router = useRouter()
   useEffect(() => {
     setIsVisible(true)
@@ -80,7 +91,79 @@ export default function LandingPage() {
 
   const handleTabContent = (tab: string) => {
     setActiveTabContent(tab);
+  }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+    // Limpiar mensajes de error cuando el usuario empieza a escribir
+    if (submitStatus === 'error') {
+      setSubmitStatus('idle')
+      setSubmitMessage('')
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+    setSubmitMessage('')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      let data;
+      try {
+        data = await response.json()
+      } catch (jsonError) {
+        console.error('Error al parsear respuesta del servidor:', jsonError)
+        setSubmitStatus('error')
+        setSubmitMessage(`Error del servidor (${response.status}). Por favor intenta de nuevo.`)
+        setIsSubmitting(false)
+        return
+      }
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        setSubmitMessage(data.message || 'Mensaje enviado correctamente. Te responderemos pronto.')
+        // Limpiar el formulario
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: ''
+        })
+        // Ocultar mensaje de éxito después de 5 segundos
+        setTimeout(() => {
+          setSubmitStatus('idle')
+          setSubmitMessage('')
+        }, 5000)
+      } else {
+        setSubmitStatus('error')
+        const errorMsg = data?.error || `Error del servidor (${response.status}). Por favor intenta de nuevo.`
+        setSubmitMessage(errorMsg)
+        console.error('Error del servidor:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: data?.error,
+        })
+      }
+    } catch (error: any) {
+      console.error('Error al enviar formulario:', error)
+      setSubmitStatus('error')
+      setSubmitMessage(error?.message || 'Hubo un error de conexión. Por favor verifica tu conexión e intenta de nuevo.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   // Mockups estáticos
@@ -129,7 +212,7 @@ export default function LandingPage() {
                 onClick={() => scrollToSection('features')}
                 className="text-gray-700 hover:text-[#E4512F] transition-all duration-200 font-medium text-sm cursor-pointer"
               >
-                Características
+                Características y beneficios
               </button>
               <button
                 onClick={() => scrollToSection('how-it-works')}
@@ -196,7 +279,7 @@ export default function LandingPage() {
                 }}
                 className="block w-full text-left text-gray-700 hover:text-brand-primary transition-all duration-200 font-medium py-2"
               >
-                Características
+                Características y beneficios
               </button>
               <button
                 onClick={() => {
@@ -328,11 +411,11 @@ export default function LandingPage() {
             {/* Enhanced Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto">
               <div className="text-center group">
-                <div className="text-3xl sm:text-4xl font-bold text-[#E4512F] mb-2 group-hover:scale-110 transition-transform duration-300">3x</div>
+                <div className="text-3xl sm:text-4xl font-bold text-[#E4512F] mb-2 group-hover:scale-110 transition-transform duration-300">x2</div>
                 <div className="text-sm text-gray-600">Más rápido</div>
               </div>
               <div className="text-center group">
-                <div className="text-3xl sm:text-4xl font-bold text-[#D64A3A] mb-2 group-hover:scale-110 transition-transform duration-300">+40%</div>
+                <div className="text-3xl sm:text-4xl font-bold text-[#D64A3A] mb-2 group-hover:scale-110 transition-transform duration-300">+17%</div>
                 <div className="text-sm text-gray-600">Más ventas</div>
               </div>
               <div className="text-center group">
@@ -475,11 +558,13 @@ export default function LandingPage() {
           </div>
           <div className="grid ">
             <div className="w-full flex flex-col items-center bg-gray-100 rounded-2xl p-4 border border-gray-200 min-w-0">
-              <div className="bg-white w-full max-w-full flex items-center flex-nowrap md:flex-wrap justify-start md:justify-between gap-2 sm:gap-3 border border-gray-200 rounded-2xl sm:p-4 pr-4 overflow-x-auto md:overflow-x-visible whitespace-nowrap md:whitespace-normal [-webkit-overflow-scrolling:touch] snap-x md:snap-none snap-mandatory scroll-smooth touch-pan-x overscroll-x-contain -mx-4 sm:mx-0 sm:px-0 min-w-0">
+              <div className="bg-white w-full max-w-full flex items-center flex-nowrap md:flex-wrap justify-start md:justify-between gap-2 sm:gap-3 border border-gray-200 rounded-2xl sm:p-4 pr-4 overflow-x-auto md:overflow-x-visible whitespace-nowrap md:whitespace-normal [-webkit-overflow-scrolling:touch] snap-x md:snap-none snap-mandatory scroll-smooth touch-pan-x overscroll-x-contain -mx-4 sm:mx-0 min-w-0">
 
                 <button className={activeTabContent === 'dashboard' ? 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-[#E4512F] text-white border border-gray-200 rounded-2xl px-4 py-2 text-sm sm:text-base shadow-sm cursor-pointer' : 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-white text-gray-700 hover:text-[#E4512F] rounded-2xl px-4 py-2 text-sm sm:text-base border border-transparent hover:border-[#E4512F]/30 cursor-pointer'} onClick={() => handleTabContent('dashboard')}>Dashboard</button>
 
                 {/* <button className={activeTabContent === 'tpv' ? 'bg-[#E4512F] text-white border border-gray-200 border-rounded-2xl p-2 rounded-2xl cursor-pointer' : 'bg-white text-black cursor-pointer'} onClick={() => handleTabContent('tpv')}>TPV</button> */}
+
+                <button className={activeTabContent === 'carta-digital' ? 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-[#E4512F] text-white border border-gray-200 rounded-2xl px-4 py-2 text-sm sm:text-base shadow-sm cursor-pointer' : 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-white text-gray-700 hover:text-[#E4512F] rounded-2xl px-4 py-2 text-sm sm:text-base border border-transparent hover:border-[#E4512F]/30 cursor-pointer'} onClick={() => handleTabContent('carta-digital')}>Carta Digital</button>
 
                 <button className={activeTabContent === 'analitica' ? 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-[#E4512F] text-white border border-gray-200 rounded-2xl px-4 py-2 text-sm sm:text-base shadow-sm cursor-pointer' : 'snap-center min-w-[112px] sm:min-w-0 shrink-0 md:shrink bg-white text-gray-700 hover:text-[#E4512F] rounded-2xl px-4 py-2 text-sm sm:text-base border border-transparent hover:border-[#E4512F]/30 cursor-pointer'} onClick={() => handleTabContent('analitica')}>Analítica</button>
 
@@ -640,21 +725,21 @@ export default function LandingPage() {
                     <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-3">
                       <TrendingUp className="w-6 h-6 text-orange-600" />
                     </div>
-                    <h5 className="font-semibold text-gray-900 mb-1">+25% Ventas</h5>
+                    <h5 className="font-semibold text-gray-900 mb-1">+17% Ventas</h5>
                     <p className="text-sm text-gray-600">Aumento promedio en ventas</p>
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
                       <Clock className="w-6 h-6 text-blue-600" />
                     </div>
-                    <h5 className="font-semibold text-gray-900 mb-1">-40% Tiempo</h5>
+                    <h5 className="font-semibold text-gray-900 mb-1">-25% Tiempo</h5>
                     <p className="text-sm text-gray-600">Reducción en tiempo de servicio</p>
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-3">
                       <Users className="w-6 h-6 text-green-600" />
                     </div>
-                    <h5 className="font-semibold text-gray-900 mb-1">+60% Satisfacción</h5>
+                    <h5 className="font-semibold text-gray-900 mb-1">+50% Satisfacción</h5>
                     <p className="text-sm text-gray-600">Mejora en experiencia cliente</p>
                   </div>
                   <div className="text-center">
@@ -825,7 +910,7 @@ export default function LandingPage() {
                   <h3 className="text-lg font-semibold">Instalación rápida</h3>
                 </div>
                 <p className="text-gray-600 text-sm">
-                  Tu sistema estará funcionando en un mínimo de 24 horas. Configuración automática y listo para usar.
+                  Tu sistema estará funcionando en un mínimo de 48 horas. Configuración automática y listo para usar.
                 </p>
               </CardContent>
             </Card>
@@ -854,7 +939,7 @@ export default function LandingPage() {
                   <h3 className="text-lg font-semibold">Configuración Personalizada</h3>
                 </div>
                 <p className="text-gray-600 text-sm">
-                  Adaptamos el sistema a las necesidades específicas de tu restaurante y flujo de trabajo.
+                  Adaptamos el sistema a tus necesidades específicas de tu restaurante y flujo de trabajo.
                 </p>
               </CardContent>
             </Card>
@@ -890,10 +975,6 @@ export default function LandingPage() {
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-[#E4512F] to-[#D64A3A] rounded-full border border-[#E4512F]/30 mb-6">
-              <Sparkles className="w-5 h-5 text-white mr-2" />
-              <span className="text-white font-medium">Nuevo</span>
-            </div>
             <h2 className="text-4xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-[#2E2523] to-[#2E2523] bg-clip-text text-transparent">
               Conoce a AURA, tu asistente inteligente
             </h2>
@@ -985,14 +1066,6 @@ export default function LandingPage() {
                     </div>
                   </div>
                 </div>
-
-                {/* Floating Elements */}
-                {/* <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-full flex items-center justify-center shadow-lg animate-bounce">
-                  <MessageSquare className="w-8 h-8 text-white" />
-                </div>
-                <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-[#E4512F] to-[#D64A3A] rounded-full flex items-center justify-center shadow-lg">
-                  <Zap className="w-6 h-6 text-white" />
-                </div> */}
               </div>
             </div>
 
@@ -1186,7 +1259,7 @@ export default function LandingPage() {
               /></div>
               <h3 className="text-lg font-semibold text-gray-900">Jaume Alcántara</h3>
               <p className="text-sm text-gray-600">CTO & Co-Founder</p>
-              <p className="mt-3 text-sm text-gray-600">Arquitectura, seguridad y rendimiento.</p>
+              <p className="mt-3 text-sm text-gray-600">Director de arquitectura, seguridad y rendimiento.</p>
             </div>
 
             {/* Member 3 */}
@@ -1201,7 +1274,7 @@ export default function LandingPage() {
               /></div>
               <h3 className="text-lg font-semibold text-gray-900">Iván Rodríguez</h3>
               <p className="text-sm text-gray-600">CGO & Co-Founder</p>
-              <p className="mt-3 text-sm text-gray-600">Expansión de la marca y desarrollo de productos.</p>
+              <p className="mt-3 text-sm text-gray-600">Director de expansión y desarrollo de productos.</p>
             </div>
 
             {/* Member 4 */}
@@ -1217,8 +1290,8 @@ export default function LandingPage() {
                 />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Santi Llinares</h3>
-              <p className="text-sm text-gray-600">CSO & Co-Founders</p>
-              <p className="mt-3 text-sm text-gray-600">Encargado de marketing y ventas.</p>
+              <p className="text-sm text-gray-600">CCO & Co-Founder</p>
+              <p className="mt-3 text-sm text-gray-600">Director de marketing y ventas.</p>
             </div>
           </div>
         </div>
@@ -1379,7 +1452,19 @@ export default function LandingPage() {
                 <p className="text-gray-600">Te responderemos en menos de 2 horas</p>
               </div>
 
-              <form className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Mensajes de estado */}
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-green-800 text-sm">{submitMessage}</p>
+                  </div>
+                )}
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-800 text-sm">{submitMessage}</p>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -1387,9 +1472,13 @@ export default function LandingPage() {
                     </label>
                     <input
                       type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#E4512F] focus:border-[#E4512F] transition-colors"
                       placeholder="Tu nombre"
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
@@ -1398,9 +1487,13 @@ export default function LandingPage() {
                     </label>
                     <input
                       type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#E4512F] focus:border-[#E4512F] transition-colors"
                       placeholder="tu@email.com"
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -1411,8 +1504,12 @@ export default function LandingPage() {
                   </label>
                   <input
                     type="tel"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#E4512F] focus:border-[#E4512F] transition-colors"
                     placeholder="+34 600 000 000"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -1421,18 +1518,23 @@ export default function LandingPage() {
                     Mensaje *
                   </label>
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     required
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors resize-none"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#E4512F] focus:border-[#E4512F] transition-colors resize-none"
                     placeholder="Cuéntanos sobre tu restaurante y cómo podemos ayudarte..."
+                    disabled={isSubmitting}
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-[#E4512F] to-[#D64A3A] hover:from-[#D64A3A] hover:to-[#E4512F] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-[#E4512F] to-[#D64A3A] hover:from-[#D64A3A] hover:to-[#E4512F] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Enviar Mensaje
+                  {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
                 </button>
               </form>
             </div>
@@ -1467,12 +1569,20 @@ export default function LandingPage() {
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">Teléfono</h3>
                   <p className="text-gray-600 text-sm mb-4">Lun-Vie 9:00-18:00</p>
-                  <a
-                    href="tel:+34900123456"
-                    className="text-[#E4512F] hover:text-[#D64A3A] font-medium text-sm transition-colors"
-                  >
-                    +34 900 123 456
-                  </a>
+                  <span className="flex flex-col">
+                    <a
+                      href="tel:+34900123456"
+                      className="text-[#E4512F] hover:text-[#D64A3A] font-medium text-sm transition-colors"
+                    >
+                      +34 676 91 73 86
+                    </a>
+                    <a
+                      href="tel:+34900123456"
+                      className="text-[#E4512F] hover:text-[#D64A3A] font-medium text-sm transition-colors"
+                    >
+                      +34 627 48 28 12
+                    </a>
+                  </span>
                 </div>
 
                 {/* WhatsApp */}
@@ -1482,18 +1592,34 @@ export default function LandingPage() {
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
                     </svg>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">WhatsApp</h3>
-                  <p className="text-gray-600 text-sm mb-4">Respuesta inmediata</p>
+                  <h3 className="font-semibold text-gray-900 mb-2">Contacta con Iván</h3>
+                  <p className="text-gray-600 text-sm mb-4">¡Responde rápido, créenos!</p>
                   <a
-                    href="https://wa.me/34900123456"
+                    href="https://wa.me/34676917386"
                     className="text-green-600 hover:text-green-700 font-medium text-sm transition-colors"
                   >
-                    +34 900 123 456
+                    +34 676 91 73 86
+                  </a>
+                </div>
+
+                <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
+                    </svg>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Contacta con Santi</h3>
+                  <p className="text-gray-600 text-sm mb-4">¡Responde rápido, créenos!</p>
+                  <a
+                    href="https://wa.me/34627482812"
+                    className="text-green-600 hover:text-green-700 font-medium text-sm transition-colors"
+                  >
+                    +34 627 48 28 12
                   </a>
                 </div>
 
                 {/* Demo */}
-                <div className="text-center p-6 bg-gradient-to-r from-[#E4512F] to-[#D64A3A] rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                {/* <div className="text-center p-6 bg-gradient-to-r from-[#E4512F] to-[#D64A3A] rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                   <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -1507,7 +1633,7 @@ export default function LandingPage() {
                   >
                     Solicitar Demo
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -1534,7 +1660,7 @@ export default function LandingPage() {
             {/* Navigation Links */}
             <nav className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8 text-sm">
               <a href="#features" className="text-gray-600 hover:text-brand-primary transition-colors">
-                Características
+                Características y beneficios
               </a>
               <a href="#how-it-works" className="text-gray-600 hover:text-brand-primary transition-colors">
                 Cómo funciona

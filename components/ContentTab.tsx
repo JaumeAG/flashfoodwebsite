@@ -6,6 +6,7 @@ import {Comandero} from "@/components/ContentTab/Comandero"
 import {AuraAsistente} from "@/components/ContentTab/AuraAsistente"
 import {Clientes} from "@/components/ContentTab/Clientes"
 import {Fidelizacion} from "@/components/ContentTab/Fidelizacion"
+import { CartaDigital } from "./ContentTab/CartaDigital"
 
 export default function ContentTab({ contentTab }: { contentTab: string }) {
     return (
@@ -18,6 +19,7 @@ export default function ContentTab({ contentTab }: { contentTab: string }) {
             {contentTab === 'asistente-ia' && <AuraAsistente />}
             {contentTab === 'clientes' && <Clientes />}
             {contentTab === 'fidelizacion' && <Fidelizacion />}
+            {contentTab === 'carta-digital' && <CartaDigital />}
         </div>
     )
 }
