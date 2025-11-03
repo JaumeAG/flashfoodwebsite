@@ -113,7 +113,8 @@ export default function LandingPage() {
     setSubmitMessage('')
 
     try {
-      const response = await fetch('/api/contact', {
+      // Usar PHP para enviar emails (funciona con static export)
+      const response = await fetch('/send-email.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
