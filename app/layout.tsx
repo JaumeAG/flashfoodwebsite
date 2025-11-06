@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import localFont from "next/font/local";
 import "./globals.css";
+import CookieBanner from "@/components/CookieBanner";
 
 // Configuración de la fuente Satoshi
 const satoshi = localFont({
@@ -162,11 +163,40 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                if (typeof window !== 'undefined') {
+                  try {
+                    const consent = localStorage.getItem('flashfood_cookie_consent');
+                    if (consent) {
+                      const parsed = JSON.parse(consent);
+                      const oneYearAgo = Date.now() - (365 * 24 * 60 * 60 * 1000);
+                      if (parsed.timestamp >= oneYearAgo) {
+                        // Aplicar consentimiento existente
+                        if (window.gtag && parsed.performance) {
+                          window.gtag('consent', 'update', { analytics_storage: 'granted' });
+                        }
+                        if (window.gtag && parsed.marketing) {
+                          window.gtag('consent', 'update', { ad_storage: 'granted' });
+                        }
+                      }
+                    }
+                  } catch (e) {
+                    console.error('Error initializing cookie consent:', e);
+                  }
+                }
+              })();
+            `,
+          }}
+        />
       </head>
       <body
         className={`${satoshi.variable} antialiased`}
       >
         {children}
+        <CookieBanner />
       </body>
     </html>
   );
