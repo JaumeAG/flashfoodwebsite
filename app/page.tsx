@@ -190,9 +190,9 @@ export default function LandingPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-[#F7F3F1] to-[#F7F3F1]">
+    <>
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100/50">
+      <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100/50" aria-label="Navegación principal">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-18">
             {/* Logo */}
@@ -324,8 +324,9 @@ export default function LandingPage() {
         </>
       )}
 
+      <main>
       {/* Hero Section - Qamarero Style */}
-      <section className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-slate-50 via-[#F7F3F1] to-white">
+      <section id="hero" className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-slate-50 via-[#F7F3F1] to-white" aria-label="Sección principal">
         <div className="max-w-7xl mx-auto w-full relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Section - Text Content */}
@@ -370,19 +371,25 @@ export default function LandingPage() {
             <div className={`hidden lg:flex items-center justify-center space-x-2 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
               {/* Smartphone Mockup */}
               <div className="relative transform -rotate-6 hover:rotate-0 transition-transform duration-300">
-                <img
+                <Image
                   src="/mockups/mockup_carta_digital.png"
-                  alt="Carta digital FlashFood"
+                  alt="Carta digital interactiva de FlashFood para restaurantes - Los clientes pueden ver el menú y hacer pedidos desde su móvil"
+                  width={384}
+                  height={800}
                   className="w-96 h-auto drop-shadow-2xl"
+                  loading="lazy"
                 />
               </div>
 
               {/* Tablet Mockup */}
               <div className="relative transform rotate-6 hover:rotate-0 transition-transform duration-300 mt-8">
-                <img
+                <Image
                   src="/mockups/mockup_carrito.png"
-                  alt="Carrito FlashFood"
+                  alt="Carrito de compra FlashFood - Sistema de pedidos online para restaurantes"
+                  width={448}
+                  height={600}
                   className="w-[28rem] h-auto drop-shadow-2xl"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -391,7 +398,7 @@ export default function LandingPage() {
       </section>
 
       {/* Visual Showcase Section - Enhanced */}
-      <section className="py-20 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1] text-gray-900 relative overflow-hidden">
+      <section id="features" className="py-20 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1] text-gray-900 relative overflow-hidden" aria-label="Características y beneficios">
         {/* Enhanced Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#E4512F]/5 via-[#D64A3A]/3 to-[#E4512F]/5"></div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-[#E4512F]/3 rounded-full blur-3xl -translate-x-48 -translate-y-48 animate-pulse"></div>
@@ -435,10 +442,13 @@ export default function LandingPage() {
             {/* Row 1: Image left, Text right */}
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <div className="relative">
-                <img
+                <Image
                   src="/bannerweb/2149303447.jpg"
-                  alt="Persona escaneando un código QR con el móvil"
+                  alt="Cliente escaneando código QR para acceder a la carta digital FlashFood en restaurante - Sistema de pedidos sin contacto"
+                  width={800}
+                  height={600}
                   className="w-full h-auto rounded-3xl shadow-2xl border border-gray-200"
+                  loading="lazy"
                 />
               </div>
               <div>
@@ -498,10 +508,13 @@ export default function LandingPage() {
                 </div>
               </div>
               <div className="order-1 lg:order-2 relative">
-                <img
+                <Image
                   src="/bannerweb/2452.jpg"
-                  alt="Camarero tomando nota en una mesa"
+                  alt="Equipo de restaurante recibiendo pedidos digitales en tiempo real con FlashFood - Gestión eficiente de pedidos"
+                  width={800}
+                  height={600}
                   className="w-full h-auto rounded-3xl shadow-2xl border border-gray-200"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -547,7 +560,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section - Interactive */}
-      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1] overflow-x-hidden">
+      <section id="features-details" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1] overflow-x-hidden" aria-label="Detalles de características">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
@@ -590,7 +603,7 @@ export default function LandingPage() {
       </section>
 
       {/* How it Works Section - Enhanced with Dual Perspective */}
-      <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-white to-blue-50" aria-label="Cómo funciona FlashFood">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
@@ -965,7 +978,7 @@ export default function LandingPage() {
 
 
       {/* AURA Assistant Section */}
-      <section id="aura-assistant" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1] text-gray-900 relative overflow-hidden">
+      <section id="aura-assistant" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1] text-gray-900 relative overflow-hidden" aria-label="AURA - Asistente de Inteligencia Artificial">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#E4512F]/5 via-[#D64A3A]/3 to-[#E4512F]/5"></div>
         <div className="absolute top-0 left-0 w-full h-full">
@@ -1232,7 +1245,7 @@ export default function LandingPage() {
       </section>
 
       {/* Team Section */}
-      <section id="team" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1]">
+      <section id="team" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-[#F7F3F1]" aria-label="Nuestro equipo">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 sm:mb-14">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Nuestro equipo</h2>
@@ -1252,7 +1265,7 @@ export default function LandingPage() {
             <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm text-center">
               <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-[#FFF0EB] flex items-center justify-center text-[#E4512F] text-2xl font-bold"><Image
                 src="/imageTeam/jaumefoto-bw.png"
-                alt="Santi Llinares"
+                alt="Jaume Alcántara - CTO y Co-Founder de FlashFood, Director de arquitectura, seguridad y rendimiento"
                 width={80}
                 height={80}
                 sizes="(max-width: 640px) 64px, 80px"
@@ -1267,7 +1280,7 @@ export default function LandingPage() {
             <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm text-center">
               <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-[#FFF0EB] flex items-center justify-center text-[#E4512F] text-2xl font-bold"><Image
                 src="/imageTeam/ivanfoto-bw.jpeg"
-                alt="Santi Llinares"
+                alt="Iván Rodríguez - CGO y Co-Founder de FlashFood, Director de expansión y desarrollo de productos"
                 width={80}
                 height={80}
                 sizes="(max-width: 640px) 64px, 80px"
@@ -1283,7 +1296,7 @@ export default function LandingPage() {
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full bg-[#FFF0EB] flex items-center justify-center overflow-hidden">
                 <Image
                   src="/imageTeam/santifoto-bw.jpg"
-                  alt="Santi Llinares"
+                  alt="Santi Llinares - Co-Founder de FlashFood"
                   width={80}
                   height={80}
                   sizes="(max-width: 640px) 64px, 80px"
@@ -1434,7 +1447,7 @@ export default function LandingPage() {
       {/* </section> */}
 
       {/* Sección de Contacto */}
-      <section id="contact" className="py-16 sm:py-20 bg-gradient-to-br from-[#F7F3F1] to-white">
+      <section id="contact" className="py-16 sm:py-20 bg-gradient-to-br from-[#F7F3F1] to-white" aria-label="Contacto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
@@ -1640,20 +1653,22 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
-
+      </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 py-8 sm:py-12">
+      <footer className="bg-white border-t border-gray-100 py-8 sm:py-12" role="contentinfo">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center space-y-6 sm:space-y-8">
             {/* Logo */}
             <div className="flex items-center space-x-2">
               <div className="w-48 h-48 flex items-center justify-center">
-                <img
+                <Image
                   src="/branding/Light-Background.svg"
-                  alt="FlashFood Logo"
+                  alt="FlashFood - Software para restaurantes con inteligencia artificial"
+                  width={192}
+                  height={192}
                   className="w-full h-full object-contain"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -1691,6 +1706,6 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
-    </div>
+    </>
   )
 }
